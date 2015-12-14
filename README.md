@@ -1,7 +1,7 @@
 # HymmnosDict
 A Dictionary app for Hymmnos.
 
-![](pic/device-2015-12-14-160523.png)
+![](pic/device-2015-12-14-160523.png) ![](pic/device-2015-12-14-160625.png)
 
 # Todo
 I18N
