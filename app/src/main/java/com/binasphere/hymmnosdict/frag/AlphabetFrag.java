@@ -1,7 +1,5 @@
 package com.binasphere.hymmnosdict.frag;
 
-import android.os.Bundle;
-
 import com.binasphere.hymmnosdict.bean.HymmnosWord;
 import com.binasphere.hymmnosdict.dao.HymmnosDao;
 

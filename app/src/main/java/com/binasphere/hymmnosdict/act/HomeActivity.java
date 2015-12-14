@@ -3,7 +3,6 @@ package com.binasphere.hymmnosdict.act;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.os.ResultReceiver;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -15,15 +14,11 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.binasphere.hymmnosdict.R;
@@ -31,9 +26,7 @@ import com.binasphere.hymmnosdict.common.LogUtil;
 import com.binasphere.hymmnosdict.common.RxProvider;
 import com.binasphere.hymmnosdict.db.DBInfo;
 import com.binasphere.hymmnosdict.frag.FragmentFactory;
-import com.binasphere.hymmnosdict.widget.AlertImDialog;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 import butterknife.Bind;

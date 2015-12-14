@@ -1,7 +1,6 @@
 package com.binasphere.hymmnosdict.common;
 
 import android.content.Context;
-import android.support.v7.view.StandaloneActionMode;
 
 import com.binasphere.hymmnosdict.App;
 

@@ -1,20 +1,14 @@
 package com.binasphere.hymmnosdict.act;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +17,10 @@ import com.binasphere.hymmnosdict.bean.HymmnosWord;
 import com.binasphere.hymmnosdict.common.RxProvider;
 import com.binasphere.hymmnosdict.common.ShareUtils;
 import com.binasphere.hymmnosdict.common.TextViewUtils;
-import com.binasphere.hymmnosdict.common.UiUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnLongClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -42,6 +36,8 @@ public class WordActivity extends AppCompatActivity {
     TextView mTvExp;
     @Bind(R.id.tv_dialect_word)
     TextView mTvDialect;
+    @Bind(R.id.toolbar)Toolbar toolbar;
+    @Bind(R.id.fab) FloatingActionButton fab;
     private HymmnosWord word;
 
 
@@ -50,20 +46,19 @@ public class WordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_word);
         ButterKnife.bind(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ShareUtils.share(WordActivity.this, word.toString());
-            }
-        });
         word = getIntent().getParcelableExtra("Hymmnos");
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(word.getHymmnos());
+        }
         initTextView();
+
+    }
+    @OnClick(R.id.fab)
+    void onFabClick(View v){
+        ShareUtils.share(WordActivity.this, word.toString());
 
     }
     @OnLongClick(R.id.tv_hym_word)

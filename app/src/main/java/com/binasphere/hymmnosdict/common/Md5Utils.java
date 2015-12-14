@@ -1,11 +1,7 @@
 package com.binasphere.hymmnosdict.common;
 
-import android.net.Uri;
-import android.util.Log;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.Security;
 
 /**
  * Created by Kerstin on 2015/12/10.
@@ -28,10 +24,10 @@ public class Md5Utils {
         try {
             MessageDigest md5 = MessageDigest.getInstance("MD5");
             byte[] bytes = md5.digest(string.getBytes());
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < bytes.length; i++) {
-                sb.append(Integer.toHexString(bytes[i] >> 4 & 0xf))
-                        .append(Integer.toHexString(bytes[i] & 0xf));
+            StringBuilder sb = new StringBuilder();
+            for (byte aByte : bytes) {
+                sb.append(Integer.toHexString(aByte >> 4 & 0xf))
+                        .append(Integer.toHexString(aByte & 0xf));
             }
 
             LogUtil.d("Hymmnos", sb.toString());

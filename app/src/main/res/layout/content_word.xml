@@ -24,7 +24,7 @@
     <Space
         android:id="@+id/space_word"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="40dp"
         android:layout_below="@id/tv_hym_word"/>
 
     <android.support.v7.widget.CardView

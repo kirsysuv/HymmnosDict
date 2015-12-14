@@ -6,8 +6,6 @@ import android.net.Uri;
 
 import com.binasphere.hymmnosdict.R;
 
-import java.io.File;
-
 /**
  * Created by Kerstin on 2015/12/14.
  */

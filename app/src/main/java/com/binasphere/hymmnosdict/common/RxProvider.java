@@ -3,17 +3,10 @@ package com.binasphere.hymmnosdict.common;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
-import android.support.annotation.VisibleForTesting;
-import android.view.View;
-import android.widget.TextView;
 
 import com.binasphere.hymmnosdict.App;
-import com.binasphere.hymmnosdict.R;
 import com.binasphere.hymmnosdict.dao.HymmnosDao;
 import com.binasphere.hymmnosdict.db.DBInfo;
 
@@ -23,10 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 import rx.Observable;
-import rx.Scheduler;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action2;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
