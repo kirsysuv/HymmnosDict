@@ -3,11 +3,12 @@ package com.binasphere.hymmnosdict.common;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
+import android.view.View;
 
 import com.binasphere.hymmnosdict.App;
-import com.binasphere.hymmnosdict.dao.HymmnosDao;
 import com.binasphere.hymmnosdict.db.DBInfo;
 
 import java.io.File;
@@ -27,40 +28,24 @@ public class RxProvider {
     public static Observable<List<String>> getTabListObservable(int order) {
         switch (order) {
             case DBInfo.ORDER_ALPHA:
-                return Observable.create(new Observable.OnSubscribe<List<String>>() {
-
-                    @Override
-                    public void call(Subscriber<? super List<String>> subscriber) {
-                        HymmnosDao dao = HymmnosDao.newInstance(App.mContext);
-                        subscriber.onNext(dao.getAlphabets());
-                    }
-                }).subscribeOn(Schedulers.io());
+                return App.DAO.getAlphabets();
             case DBInfo.ORDER_DIALECT:
             default:
-                return Observable.create(new Observable.OnSubscribe<List<String>>() {
-
-                    @Override
-                    public void call(Subscriber<? super List<String>> subscriber) {
-                        HymmnosDao dao = HymmnosDao.newInstance(App.mContext);
-                        subscriber.onNext(dao.getDialects());
-                    }
-                }).subscribeOn(Schedulers.io());
-
+                return App.DAO.getDialects();
         }
 
     }
 
-    public static Observable<Uri> saveImageAndGetPathObservable(final Context context, final Bitmap cache, final String title) {
+    public static Observable<Uri> saveImageAndGetPathObservable(final Context context, final View v, final String title) {
         return Observable.create(new Observable.OnSubscribe<Bitmap>() {
             @Override
             public void call(Subscriber<? super Bitmap> subscriber) {
-//                Bitmap bitmap = Bitmap.createBitmap(tv.getWidth(), tv.getHeight(),
-//                        Bitmap.Config.ARGB_8888);
-//                Canvas canvas = new Canvas(bitmap);
-//                tv.draw(canvas);
-//                tv.setDrawingCacheEnabled(true);
-//                tv.buildDrawingCache();
-                subscriber.onNext(cache);
+                v.setDrawingCacheBackgroundColor(Color.WHITE);
+                v.buildDrawingCache();
+                Bitmap drawingCache = v.getDrawingCache();
+                Bitmap bitmap = drawingCache.copy(Bitmap.Config.ARGB_8888, false);
+                v.destroyDrawingCache();
+                subscriber.onNext(bitmap);
                 subscriber.onCompleted();
             }
         }).flatMap(new Func1<Bitmap, Observable<Uri>>() {
@@ -76,7 +61,7 @@ public class RxProvider {
                     try {
                         FileOutputStream fos = new FileOutputStream(file);
 //                        assert bitmap != null;
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                         fos.flush();
                         fos.close();
                     } catch (IOException e) {

@@ -73,7 +73,7 @@ public class HomeActivity extends AppCompatActivity
         appbarlayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                LogUtil.d("Hymmnos", verticalOffset + " Offset");
+                LogUtil.d("Hymmnos", verticalOffset + " Offset"+ " toolbar"+toolbar.getHeight());
                 TypedArray styledAttributes = getTheme().obtainStyledAttributes(
                         new int[]{android.R.attr.actionBarSize});
                 float pixelvalue = styledAttributes.getDimensionPixelSize(0, 0);
@@ -206,12 +206,7 @@ public class HomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_alphabet) {
+        if (id == R.id.nav_alphabet) {
             initData(DBInfo.ORDER_ALPHA);
         } else if (id == R.id.nav_dialect) {
             initData(DBInfo.ORDER_DIALECT);
@@ -219,5 +214,10 @@ public class HomeActivity extends AppCompatActivity
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

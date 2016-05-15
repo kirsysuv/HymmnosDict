@@ -20,18 +20,15 @@ import com.binasphere.hymmnosdict.adapter.MyReAdapter;
 import com.binasphere.hymmnosdict.bean.HymmnosWord;
 import com.binasphere.hymmnosdict.common.LogUtil;
 import com.binasphere.hymmnosdict.common.UiUtils;
-import com.binasphere.hymmnosdict.dao.HymmnosDao;
 import com.binasphere.hymmnosdict.db.DBInfo;
 
 import java.util.List;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
-public class SearchFragment extends Fragment {
+public class BaseFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -41,10 +38,9 @@ public class SearchFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private RecyclerView mRv;
-    public HymmnosDao dao;
     private MyReAdapter adapter;
 
-    public SearchFragment() {
+    public BaseFragment() {
         // Required empty public constructor
 
     }
@@ -55,11 +51,11 @@ public class SearchFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SearchFragment.
+     * @return A new instance of fragment BaseFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
+    public static BaseFragment newInstance(String param1, String param2) {
+        BaseFragment fragment = new BaseFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -84,10 +80,9 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         mRv = (RecyclerView) view.findViewById(R.id.rv_search);
         mRv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        dao = HymmnosDao.newInstance(App.mContext);
         initData();
 
-//        words = dao.findByAlphabet(mParam2);
+//        words = DAO.findByAlphabet(mParam2);
 //        adapter = new MyReAdapter(words);
 
 //        mRv.setAdapter(adapter);
@@ -97,24 +92,18 @@ public class SearchFragment extends Fragment {
         return view;
     }
 
-    List<HymmnosWord> getWordList(HymmnosDao dao, String key) {
+    Observable<List<HymmnosWord>> getWordList(String key) {
         switch (Integer.parseInt(mParam1)) {
             case DBInfo.ORDER_ALPHA:
-                return dao.findByAlphabet(key);
+                return App.DAO.findByAlphabet(key);
             case DBInfo.ORDER_DIALECT:
             default:
-                return dao.findByDialect(key);
+                return App.DAO.findByDialect(key);
         }
     }
 
     void initData() {
-        Observable.create(new Observable.OnSubscribe<List<HymmnosWord>>() {
-            @Override
-            public void call(Subscriber<? super List<HymmnosWord>> subscriber) {
-                subscriber.onNext(getWordList(dao, mParam2));
-            }
-        })
-                .subscribeOn(Schedulers.io())
+        getWordList(mParam2)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<HymmnosWord>>() {
                     @Override
@@ -131,14 +120,14 @@ public class SearchFragment extends Fragment {
                 @Override
                 public void onClick(View v, int position) {
                     HymmnosWord word = adapter.getItem(position);
-                    Intent intent=new Intent(getActivity(), WordActivity.class);
-                    intent.putExtra("Hymmnos",word);
+                    Intent intent = new Intent(getActivity(), WordActivity.class);
+                    intent.putExtra("Hymmnos", word);
                     startActivity(intent);
                     Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
                     LogUtil.d("Hymmnos", mParam2 + " fragment click");
                 }
             });
-        mRv.setAdapter(adapter);
+            mRv.setAdapter(adapter);
         }
     }
 

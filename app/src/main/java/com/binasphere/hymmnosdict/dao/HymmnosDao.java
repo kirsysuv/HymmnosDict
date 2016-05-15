@@ -11,25 +11,13 @@ import com.binasphere.hymmnosdict.db.HymSqLOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HymmnosDao {
+public class HymmnosDao implements HymmnosLogic {
     private HymSqLOpenHelper mHelper;
-    private static HymmnosDao dao;
-
     public HymmnosDao(Context context) {
         mHelper = new HymSqLOpenHelper(context);
     }
 
-    public static HymmnosDao newInstance(Context context) {
-        if (dao == null) {
-            synchronized (HymmnosDao.class) {
-                if (dao == null) {
-                    dao = new HymmnosDao(context);
-                }
-            }
-        }
-        return dao;
-    }
-
+    @Override
     public List<String> getAlphabets() {
         List<String> data = new ArrayList<String>();
         for (char i = 'A'; i < 'Z'; i++) {
@@ -39,6 +27,7 @@ public class HymmnosDao {
         return data;
     }
 
+    @Override
     public List<String> getDialects() {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         List<String> data = new ArrayList<String>();
@@ -52,6 +41,7 @@ public class HymmnosDao {
         return data;
     }
 
+    @Override
     public List<HymmnosWord> findAllWords() {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         List<HymmnosWord> data = new ArrayList<HymmnosWord>();
@@ -69,6 +59,7 @@ public class HymmnosDao {
 
     }
 
+    @Override
     public List<HymmnosWord> findByWords(String words) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         List<HymmnosWord> data = new ArrayList<HymmnosWord>();
@@ -86,6 +77,7 @@ public class HymmnosDao {
         return data;
     }
 
+    @Override
     public HymmnosWord findById(String id) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         HymmnosWord hw = new HymmnosWord();
@@ -102,6 +94,7 @@ public class HymmnosDao {
         return hw;
     }
 
+    @Override
     public HymmnosWord findByHymmnos(String hymmnos) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         HymmnosWord hw = new HymmnosWord();
@@ -118,6 +111,7 @@ public class HymmnosDao {
         return hw;
     }
 
+    @Override
     public List<HymmnosWord> findByDialect(String dialect) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         List<HymmnosWord> data = new ArrayList<HymmnosWord>();
@@ -136,6 +130,7 @@ public class HymmnosDao {
 
     }
 
+    @Override
     public List<HymmnosWord> findByAlphabet(String alpha) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         List<HymmnosWord> data = new ArrayList<HymmnosWord>();
@@ -160,7 +155,6 @@ public class HymmnosDao {
     }
 
     public void close() {
-        dao=null;
         mHelper.close();
     }
 }

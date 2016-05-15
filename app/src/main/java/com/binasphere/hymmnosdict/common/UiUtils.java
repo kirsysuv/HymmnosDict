@@ -9,7 +9,7 @@ import com.binasphere.hymmnosdict.App;
  */
 public class UiUtils {
     public static Context getApplication(){
-        return App.mContext;
+        return App.CONTEXT;
     }
     public static float getDensity(){
         return  (getApplication().getResources().getDisplayMetrics().density+0.5f);

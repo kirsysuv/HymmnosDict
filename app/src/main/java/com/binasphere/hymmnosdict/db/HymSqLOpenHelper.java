@@ -13,7 +13,7 @@ import java.io.InputStream;
 
 public class HymSqLOpenHelper extends SQLiteOpenHelper {
 
-    private static final String DEBUG_TAG = "HymSqLOpenHelper";
+    private static final String DEBUG_TAG =HymSqLOpenHelper.class.getSimpleName();
     private static boolean mLoaded;
     private Context mContext;
 
@@ -46,7 +46,7 @@ public class HymSqLOpenHelper extends SQLiteOpenHelper {
             is = mContext.getAssets().open(DBInfo.DB_NAME);
             fos = new FileOutputStream(file);
             byte[] buf = new byte[1024 * 8];
-            int len = 0;
+            int len;
             while ((len = is.read(buf)) != -1) {
                 fos.write(buf, 0, len);
             }

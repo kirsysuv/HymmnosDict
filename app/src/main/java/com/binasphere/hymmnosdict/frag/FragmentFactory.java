@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 public class FragmentFactory {
 
     public static Fragment newInstance(int order,String string) {
-        return SearchFragment.newInstance(order+"",string);
+        return BaseFragment.newInstance(order+"",string);
 //        switch (order) {
 //            case DBInfo.ORDER_ALPHA:
 //                return AlphabetFrag.newInstance("",string);

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.binasphere.hymmnosdict.bean.HymmnosWord;
 import com.binasphere.hymmnosdict.dao.HymmnosDao;
+import com.binasphere.hymmnosdict.dao.HymmnosLogic;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     public void test() {
-        HymmnosDao dao = new HymmnosDao(mContext);
+        HymmnosLogic dao = new HymmnosDao(mContext);
         List<HymmnosWord> words = dao.findAllWords();
         for (HymmnosWord word:
              words

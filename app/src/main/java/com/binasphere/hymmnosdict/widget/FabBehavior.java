@@ -13,6 +13,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 
+import com.binasphere.hymmnosdict.common.LogUtil;
+
 /**
  * Created by Kerstin on 2015/12/7.
  */
@@ -39,6 +41,7 @@ public class FabBehavior extends FloatingActionButton.Behavior{
     public void onNestedScroll(final CoordinatorLayout coordinatorLayout, final FloatingActionButton child, final View target, final int dxConsumed, final int dyConsumed, final int dxUnconsumed, final int dyUnconsumed) {
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed,
                 dxUnconsumed, dyUnconsumed);
+        LogUtil.d("SSX",dyConsumed+" dyConsumed"+ "  "+dyUnconsumed+" dyUnconsumed");
         if (dyConsumed > 0 && !this.mIsAnimatingOut &&
                 child.getVisibility() == View.VISIBLE) {
             // User scrolled down and the FAB is currently visible -> hide the FAB
